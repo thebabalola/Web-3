@@ -1,9 +1,115 @@
-	- Setting-Up the solidity environment -
+	--- Setting-Up the solidity environment ---
 
 1. Specify the License	(SPDX-License-Identifier: MIT)
 2. Specify the praga version of your solidity. ^0.8.18	||	>=0.8.18 <0.9.0
 
 3. declare the contract - 	contract DoTransaction {}
 
-Basic variable types
 
+
+	--- Basic variable types ---
+	- Boolean  (true or false)
+	- Unit	(positive whole number , no decimal nor negative number)
+	- Int	(signed number can be positive, negative, decimal)
+	- address	(addresses)
+	- btyes
+
+All variables types have a default value: 
+			e.g 	bool hasFavouriteNumber;  //default value is false
+    				uint256 favouriteNum;	//default value is '0'
+
+
+
+ - Bits vs Bytes -
+
+Bits – Smallest unit of data (0 or 1).
+Bytes – Group of 8 bits (1 byte = 8 bits).
+
+TQ - 01010100	01010001 - 16 bits
+						 -	2 bytes (this is because 8bits = 1 byte)
+
+
+	- When do you use bits and when do you use Bytes -
+Bits (b): for interface speed
+		- Used for measuring data transfer speed (e.g., internet speed, network bandwidth). Example: "100 Mbps" (Megabits per second).
+Bytes (B): for data storage
+			- Used for data storage and memory size (e.g., file size, RAM). Example: "1 GB" (Gigabyte) of storage.
+
+ Key Difference:
+Bits focus on how fast data moves.
+Bytes focus on how much data is stored.
+
+
+	--- Functions ---
+
+	- Variable Scope (Local and State Variable) -
+
+	Local: variables within a function (data are, stored temporary in memory)
+	State: varaibles outside of the function, can be callled into any function.
+			(it data are, stored in the evm state)
+
+
+ - Visbility of Functions and varaibles -
+ The default visibility of varaibles is "internal".
+	That is why when you compile, and put an input it doesnt show anything.
+	But when changed to Public, you def see it.
+
+	Public: visible externally and internally
+	Private: only visible within a current contract
+
+	External: only visible externally (only for Functions). Not for variables
+			used in other functions using (this.function)
+	Internal: only visible internally (to the contract and it child contract)
+
+
+
+- Modifiers -
+pure: for functions : Disallows modification or access of state
+view: for functions : Disallows modification of state.
+payable: for functions : Allows them to recieve ether together with a call
+
+
+
+NOTE : A public state variable = an automatic getter function (solidity automatically converts it to a getter function)
+
+		e,g: 	// SPDX-License-Identifier: MIT
+				pragma solidity ^0.8.0;
+
+			contract Example {
+    		uint public myNumber = 42;  // Public state variable
+
+    			// Solidity automatically generates a getter function:
+    				function myNumber() public view returns (uint) {
+    			    return myNumber;
+    			}
+			}
+
+	But, If a state variable is private or internal, you must explicitly define a getter function, to get and store it value, just like we typically do
+		e.g:
+			// Custom getter function
+    			function getMyNumber() public view returns (uint) {
+        			return myNumber;
+    		}
+
+
+	// --- View vs pure --
+
+	view: only read state , it doesnt modify.
+		example: in the function getMyNumver(), we are only viewing the value stored in "myNumber variable"
+
+	pure: doesnt read state, nor does it modify the state.
+		example: instead of return "myNumber", it would be "return 8"
+
+	N.B: Both dont spend gas, as they are not modifying or changing state
+		- That's why the buttons in remix of some function would be blue
+		- while some orange.
+		(The blue ones  only view/read state they dont modify it, while the orange modify's state)
+
+
+
+		But if a function that modify's state calls a pure or view function, it would cost gas.
+		as it would cost more gass
+
+
+
+	--- Arrays and Structs ---
