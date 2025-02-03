@@ -4,8 +4,8 @@ pragma solidity >=0.7.0 <0.9.0;
 
 contract SimpleStorage {
 
-    // -- Basic variable type:  boolean, uint, int, address, btyes --
-    bool hasFavouriteNumber = true;  //this is a boolean variable
+    // -- BASIC VARIABLE TYPE:  BOOLEAN, UINT, INT, ADDRESS, BTYES --
+    bool isFavouriteNumber = true;  //this is a boolean variable
     uint256 favouriteNum = 88;
 
     int256 favourNum = -56;
@@ -15,8 +15,9 @@ contract SimpleStorage {
     bytes32 fovouriteBytes32 = "cat";   //strings and bytes are literally the same thing
     
 
-    // Array
+    // ARRAY
     uint256[] listofFavNum; //arrays of data
+    // Person[3] private numOfPeople;  //static array of struct Person(i.e not more than 3 persons to be added)
 
     // Struct
     struct Person {
@@ -28,12 +29,13 @@ contract SimpleStorage {
     Person public personJohn = Person(15, "john");
     Person public personGift = Person({age: 9, name: "gift"});
 
-    Person[3] private numOfPeople;  //static array (i.e not more than 3 persons to be added)
-    Person[] public listOfPersons; //dynamuc array
+
+    //dynamuc array & arrays of struct
+    Person[] public listOfPersons; 
 
 
 
-    // -- Public view variable & Functions --
+    // -- PUBLIC VIEW VARIABLE & FUNCTIONS --
     uint256 public favouriteNumber ; //help view changes or data store into the variable, under the deployed contract section
 
 
@@ -46,7 +48,22 @@ contract SimpleStorage {
         return favouriteNumber;
     }
 
+    /// function to add persons (arrays of struct)
+    function addPersons(uint256 _age, string memory _name) public { 
+        listOfPersons.push(Person(_age, _name));
+    }
+
 
 }
 
 // 0xd9145CCE52D386f254917e481eB44e9943F39138
+
+/*  Recommended AI engines 
+    - Chatgpt
+    - phind
+
+    - Github Discussion
+
+    - Stack Exchange Ethereum
+    - Peeranha
+*/
